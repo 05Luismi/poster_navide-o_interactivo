@@ -84,57 +84,82 @@ body {
   animation: fadeIn 1s ease .2s both;
 }
 
-/* Titular navideño: perfil rojo oscuro, relieve rojo "de caramelo" y brillo cálido */
-.headline {
+/* Titular de neón como un letrero de tubo: letra cursiva de trazo continuo,
+   "Ningún niño" en neón blanco y "sin regalo" en neón rojo, con estrellitas de
+   colores y un árbol verde alrededor. Cada pieza parpadea por su cuenta. */
+/* bloque de cabecera: letrero y frase alineados a la misma izquierda y pegados */
+.hero {
   position: absolute;
-  top: 50px;
-  left: 38px;
-  font-family: var(--serif);
-  font-weight: 900;
-  font-size: 106px;
-  line-height: .92;
-  letter-spacing: -.01em;
-  color: #fff6e6;
-  -webkit-text-stroke: 5px #5e0b12;
-  paint-order: stroke fill;               /* el perfil queda por fuera de la letra */
-  text-shadow:
-    0 1px 0 #a8161f,
-    0 2px 0 #9e141d,
-    0 3px 0 #93121b,
-    0 4px 0 #881018,
-    0 5px 0 #7d0e16,
-    0 6px 0 #720c14,
-    0 7px 0 #650a11,
-    0 12px 8px rgba(18, 6, 20, .55),
-    0 20px 34px rgba(8, 6, 25, .6),
-    0 0 46px rgba(255, 214, 150, .28);
+  top: 64px;
+  left: 44px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.headline {
+  position: relative;
+  margin: 0;
+  /* rótulo de neón en cursiva: un solo trazo fino y uniforme, como un tubo de cristal doblado */
+  font-family: 'Bestigia', 'Fraunces', Georgia, serif;
+  font-weight: 400;
+  font-size: 100px;
+  line-height: .98;
+  letter-spacing: .01em;
+  animation: neonHum 3.4s ease-in-out infinite;
 }
 
-.headline .line { display: block; white-space: nowrap; }
+.headline .line {
+  display: block;
+  white-space: nowrap;
+  color: #ffffff;
+  -webkit-text-stroke: .8px #ffffff;          /* engrosa el trazo como un tubo */
+  text-shadow:
+    0 0 2px #fff,
+    0 0 7px #e8f4ff,
+    0 0 16px #b9dcff,
+    0 0 32px rgba(150, 200, 255, .85),
+    0 0 64px rgba(120, 170, 255, .55);
+}
 .headline .line--gold {
   display: inline-block;
-  color: #ffcf55;
+  margin-left: 58px;
+  color: #ffe3e3;
+  -webkit-text-stroke: .8px #ff3b3b;
+  text-shadow:
+    0 0 2px #ffd0d0,
+    0 0 7px #ff2a2a,
+    0 0 16px #ff1f1f,
+    0 0 34px rgba(255, 20, 30, .9),
+    0 0 70px rgba(255, 10, 30, .6);
 }
 
-/* ramita de acebo junto a "sin regalo" */
-.holly {
+/* zumbido suave de todo el letrero */
+@keyframes neonHum { 0%, 100% { opacity: 1; } 50% { opacity: .93; } }
+/* parpadeo ocasional de una letra: baja un instante pero nunca llega a apagarse */
+@keyframes neonFlicker {
+  0%, 90%, 100% { opacity: 1; }
+  91%   { opacity: .62; }
+  92%   { opacity: 1; }
+  93.2% { opacity: .7; }
+  94.5% { opacity: 1; }
+}
+
+
+.ch {
   display: inline-block;
-  width: 84px;
-  margin-left: 4px;
-  vertical-align: top;
-  transform: translateY(14px) rotate(-14deg);
-  filter: drop-shadow(0 5px 6px rgba(10, 6, 20, .5));
+  transition: color .25s ease;
+  will-change: transform, opacity;
+  animation: neonFlicker var(--fd, 10s) linear var(--fdelay, 0s) infinite;
 }
-.holly svg { display: block; width: 100%; height: auto; }
 
-.ch { display: inline-block; transition: color .25s ease; will-change: transform; }
 .ch-in { display: inline-block; animation: dropIn 1s cubic-bezier(.2, 1.5, .4, 1) both; }
 .ch.space { width: .24em; }
 
 .message {
-  position: absolute;
-  top: 282px;
-  left: 44px;
+  position: relative;
+  margin-left: 6px;
   width: 560px;
   animation: fadeUp 1s ease 1.1s both;
 }
@@ -186,6 +211,7 @@ body {
 
 /* ---------- Sello giratorio ---------- */
 .badge {
+  isolation: isolate;               /* las cintas quedan detrás del disco, no detrás del cartel */
   position: absolute;
   top: 52px;
   right: 40px;
@@ -196,32 +222,59 @@ body {
   animation: fadeIn 1s ease 1.4s both;
 }
 
+/* disco de fondo: azul noche con doble filete dorado (el texto gira encima) */
+.badge::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #232a52, #141a38 70%);
+  border: 2px solid #d9b25a;
+  box-shadow: inset 0 0 0 5px #141a38, inset 0 0 0 6.5px rgba(217, 178, 90, .75), 0 8px 18px rgba(5, 5, 20, .45);
+}
+/* cintas de escarapela que cuelgan por detrás */
+.badge-tails { position: absolute; left: 50%; top: 92px; width: 0; height: 0; z-index: -1; }
+.badge-tails::before, .badge-tails::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 74px;
+  background: linear-gradient(90deg, #8e141c, #c0262f 45%, #a51b24);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+  box-shadow: inset 0 0 0 2px rgba(217, 178, 90, .7);
+}
+.badge-tails::before { left: -32px; transform: rotate(16deg); transform-origin: top center; }
+.badge-tails::after  { left: 2px;   transform: rotate(-16deg); transform-origin: top center; }
+
 .badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 
 .badge-ring text {
   font-family: var(--sans);
   font-weight: 800;
-  font-size: 13.5px;
-  letter-spacing: 1.5px;
-  fill: var(--cream);
+  font-size: 12.5px;
+  letter-spacing: 1.6px;
+  fill: #e9c879;
 }
 
 .badge-core {
   position: absolute;
-  inset: 31px;
+  inset: 33px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #e0464e, var(--red) 55%, #8a141b);
-  color: var(--cream);
+  background: radial-gradient(circle at 38% 30%, #d8343d, #b51f29 55%, #8a141b);
+  color: #fbf3e6;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 26px rgba(5, 5, 20, .5), inset 0 -4px 8px rgba(0, 0, 0, .25), inset 0 3px 6px rgba(255, 255, 255, .25);
+  border: 2px solid #d9b25a;
+  /* costura punteada por dentro y relieve suave (sombras oscuras, sin brillo) */
+  box-shadow: inset 0 0 0 4px #b51f29, inset 0 0 0 5px rgba(251, 243, 230, .55), inset 0 -5px 10px rgba(0, 0, 0, .25), 0 4px 10px rgba(5, 5, 20, .4);
   transition: background .3s ease, color .3s ease;
 }
 
-.badge-big   { font-family: var(--serif); font-weight: 900; font-size: 34px; line-height: 1; }
-.badge-small { font-size: 11px; font-weight: 800; letter-spacing: .06em; }
+.badge-big   { font-family: 'Bestigia', var(--serif); font-weight: 400; font-size: 36px; line-height: .95; letter-spacing: .01em; }
+.badge-small { font-size: 9.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #f1d58e; margin-top: 2px; }
 
 /* ---------- Etiqueta flotante del objeto 3D bajo el cursor ---------- */
 .tooltip {
@@ -366,7 +419,7 @@ body {
   opacity: 0;
   transition: opacity .2s ease;
   will-change: transform;
-  filter: drop-shadow(0 0 3px rgba(40, 50, 90, .9)) drop-shadow(0 0 10px rgba(255, 220, 150, .9));
+  filter: drop-shadow(0 0 3px rgba(40, 50, 90, .9)) drop-shadow(0 0 5px rgba(255, 220, 150, .45));
 }
 .cursor svg { width: 100%; height: 100%; overflow: visible; }
 
@@ -406,6 +459,7 @@ body {
 @keyframes pulse  { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
 
 /* Modo captura (index.html?captura) */
+.no-intro .ch, .no-intro .headline,
 .no-intro .ch-in,
 .no-intro .message,
 .no-intro .badge,
@@ -413,5 +467,5 @@ body {
 .no-intro .topbar { animation: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ch-in, .message, .badge, .hint, .topbar { animation: none; }
+  .ch, .headline, .ch-in, .message, .badge, .hint, .topbar { animation: none; }
 }

@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ningún niño sin regalo · Fundación ITACA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600;1,9..144,800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="fonts/fonts.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,29 +20,19 @@
         <div class="overlay">
           <header class="topbar">Fundación ITACA · L'Hospitalet</header>
 
-          <h1 class="headline" id="headline" aria-label="Ningún niño sin regalo">
-            <span class="line">Ningún niño</span>
-            <span class="line line--gold">sin regalo</span><span class="holly" aria-hidden="true">
-              <svg viewBox="0 0 100 70">
-                <path d="M50,40 C40,22 22,24 8,16 C12,24 6,28 10,34 C4,38 8,44 4,50 C18,44 34,52 50,40Z" fill="#2f8a4e" stroke="#123d22" stroke-width="2.5" stroke-linejoin="round"/>
-                <path d="M50,40 C30,36 20,34 9,22" fill="none" stroke="#1a5a31" stroke-width="2"/>
-                <path d="M50,40 C60,22 78,24 92,16 C88,24 94,28 90,34 C96,38 92,44 96,50 C82,44 66,52 50,40Z" fill="#3a9d5c" stroke="#123d22" stroke-width="2.5" stroke-linejoin="round"/>
-                <path d="M50,40 C70,36 80,34 91,22" fill="none" stroke="#1a5a31" stroke-width="2"/>
-                <circle cx="43" cy="47" r="8" fill="#d42a33" stroke="#5e0b12" stroke-width="2"/>
-                <circle cx="57" cy="47" r="8" fill="#c0262f" stroke="#5e0b12" stroke-width="2"/>
-                <circle cx="50" cy="35" r="8" fill="#e0353e" stroke="#5e0b12" stroke-width="2"/>
-                <circle cx="47" cy="32" r="2.4" fill="#fff" opacity=".8"/>
-                <circle cx="40" cy="44" r="2.2" fill="#fff" opacity=".7"/>
-                <circle cx="54" cy="44" r="2.2" fill="#fff" opacity=".7"/>
-              </svg>
-            </span>
-          </h1>
-
-          <div class="message">
-            <p class="quote">Dentro de cada <span class="kw" data-fx="shake">regalo</span> hay una <em class="kw" data-fx="smile">sonrisa</em>.</p>
+          <!-- cabecera: el letrero de neón y la frase van juntos, como un solo bloque -->
+          <div class="hero">
+            <h1 class="headline" id="headline" aria-label="Ningún Niño Sin Regalo">
+              <span class="line">Ningún Niño</span>
+              <span class="line line--gold">Sin Regalo</span>
+            </h1>
+            <div class="message">
+              <p class="quote">Dentro de cada <span class="kw" data-fx="shake">regalo</span> hay una <em class="kw" data-fx="smile">sonrisa</em>.</p>
+            </div>
           </div>
 
           <div class="badge" id="badge" role="button" tabindex="0" aria-label="Dona 10 euros: regala un juguete">
+            <span class="badge-tails" aria-hidden="true"></span>
             <svg class="badge-ring" id="badgeRing" viewBox="0 0 160 160" aria-hidden="true">
               <defs><path id="ringPath" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
               <text><textPath href="#ringPath">DONA ✦ REGALA ✦ ILUSIONA ✦ DONA ✦ REGALA ✦ ILUSIONA ✦</textPath></text>
@@ -99,6 +87,16 @@
   </main>
 
   <script src="lib/three.min.js"></script>
+  <!-- three-mesh-bvh (MIT): acelera los rayos del cursor y de la física de los regalos -->
+  <script src="lib/three-mesh-bvh.js"></script>
+  <!-- Postprocesado oficial de Three.js r128: brillo de luces (bloom) y suavizado de bordes (FXAA) -->
+  <script src="lib/postprocessing/EffectComposer.js"></script>
+  <script src="lib/postprocessing/RenderPass.js"></script>
+  <script src="lib/postprocessing/ShaderPass.js"></script>
+  <script src="lib/postprocessing/CopyShader.js"></script>
+  <script src="lib/postprocessing/LuminosityHighPassShader.js"></script>
+  <script src="lib/postprocessing/UnrealBloomPass.js"></script>
+  <script src="lib/postprocessing/FXAAShader.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
